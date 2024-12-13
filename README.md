@@ -43,3 +43,14 @@ docker compose ps
 ```bash
 docker compose down
 ```
+
+
+#### Nota
+Se utiliza la implementación `FileSystemStorageService` para la gestión de archivos en el sistema, la cual está ubicada bajo el namespace `People.Infrastructure.Shared.Storage`. Esta implementación permite almacenar los archivos localmente en el sistema de archivos.
+
+Además, el sistema define una abstracción a través de la interfaz `IStorageService` en el namespace `People.Application.Services`, la cual tiene dos implementaciones:
+
+- **FileSystemStorageService**: Gestión de archivos en el sistema de archivos local.
+- **S3StorageService (NO PROBADO)**: Gestión de archivos utilizando almacenamiento en Amazon S3.
+
+Ambas implementaciones permiten intercambiar la estrategia de almacenamiento sin modificar la lógica de negocio, facilitando la configuración y escalabilidad del sistema.
