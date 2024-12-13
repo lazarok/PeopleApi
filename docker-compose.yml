@@ -1,0 +1,6 @@
+﻿services:
+  people.api:
+    image: people.api
+    build:
+      context: .
+      dockerfile: src/People.Api/Dockerfile
