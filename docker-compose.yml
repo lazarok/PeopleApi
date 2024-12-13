@@ -1,6 +1,31 @@
 ﻿services:
+  # The .NET API service
   people.api:
     image: people.api
+    container_name: people-api
     build:
       context: .
       dockerfile: src/People.Api/Dockerfile
+    ports:
+      - "5050:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  # The MySQL service
+  db:
+    image: mysql:8.0
+    container_name: people-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssword!
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

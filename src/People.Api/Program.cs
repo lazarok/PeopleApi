@@ -61,13 +61,9 @@ var app = builder.Build();
 
 app.UseCors();
 
-if (!app.Environment.IsProduction())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Extensions
 app.UseGlobalException();
