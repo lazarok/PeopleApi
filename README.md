@@ -1,6 +1,6 @@
 # Proyecto People API
 
-Este proyecto contiene una API de .NET que se ejecuta con Docker y se conecta a una base de datos MySQL. A continuación se describen los pasos para clonar el repositorio y ejecutar los contenedores en un entorno de **producción**.
+Este proyecto incluye una API de .NET que corre en Docker, se conecta a MySQL, y cuenta con monitoreo mediante Seq, un Health Check para verificar el estado de la aplicación y pruebas de integración con cobertura de código.. A continuación se describen los pasos para clonar el repositorio y ejecutar los contenedores en un entorno de **producción**.
 
 ## Requisitos previos
 
@@ -57,7 +57,7 @@ Ambas implementaciones permiten intercambiar la estrategia de almacenamiento sin
 
 
 #
-## Ejecutar Pruebas Unitarias
+## Ejecutar Pruebas
 
 Ir al directorio
 ```bash
@@ -105,3 +105,8 @@ docker run --name  local-mysql -e MYSQL_ROOT_PASSWORD=P@ssword! -d -p 3306:3306 
 docker run --name local-seq -e ACCEPT_EULA=Y -p 5341:80 datalust/seq
 ```
 Ejcuta el proyecto por la URL https://localhost:7298
+
+
+- **Swagger**: https://localhost:7298/swagger/index.html
+- **Health Checks**: https://localhost:7298/healthchecks-ui#/healthchecks
+- **Seq**: http://localhost:5341/
