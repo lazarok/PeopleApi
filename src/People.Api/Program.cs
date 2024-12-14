@@ -2,8 +2,11 @@ using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using People.Api.Healths;
 using People.Application;
 using People.Application.Exceptions;
 using People.Application.Models;
@@ -57,7 +60,25 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddHealthChecks()
+    .AddMySql(builder.Configuration.GetConnectionString("People")!, tags: new[] { "database" })
+    .AddCheck<WebHealthCheck>("web_server_check", tags: new[] { "web_server" });
+
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+
 var app = builder.Build();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI();
+
+app.MapHealthChecks("/health/secure", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}).RequireAuthorization();
 
 app.UseCors();
 

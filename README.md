@@ -75,8 +75,11 @@ docker-compose.yml                      src
 dotnet test /p:CollectCoverage=true
 ```
 
-<img width="95%" src="docs/coverage.png">
+<img width="90%" src="docs/coverage.png">
 
-#
-#
+#### Health Checks
 
+Abre tu navegador web y navega a http://localhost:5050/healthchecks-ui
+
+
+<img width="90%" src="docs/healthchecks.png">
