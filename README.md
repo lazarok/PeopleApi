@@ -104,7 +104,7 @@ docker run --name  local-mysql -e MYSQL_ROOT_PASSWORD=P@ssword! -d -p 3306:3306 
 ```bash
 docker run --name local-seq -e ACCEPT_EULA=Y -p 5341:80 datalust/seq
 ```
-Ejcuta el proyecto por la URL https://localhost:7298
+Ejecuta el proyecto por la URL https://localhost:7298
 
 
 - **Swagger**: https://localhost:7298/swagger/index.html
