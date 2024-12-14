@@ -9,6 +9,7 @@ public interface IPicturePersonService
 {
     Task<string> UploadAsync(Person person, Stream content);
     Task<ApiResponse<MediaFileModel>> GetPictureAsync(string filename, CancellationToken cancellation = default);
+    Task DeletePictureAsync(string filename);
 }
 
 public class PicturePersonService : IPicturePersonService
@@ -38,5 +39,10 @@ public class PicturePersonService : IPicturePersonService
             Filename = filename,
             FileContent = FileHelpers.ToStream(bytes)
         });
+    }
+
+    public async Task DeletePictureAsync(string filename)
+    {
+        await _storageService.DeleteAsync(ContainerName, filename);
     }
 }
