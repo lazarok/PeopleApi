@@ -32,7 +32,7 @@ docker compose up --build -d
 docker compose ps
 ```
 
-![img.png](docs/img.png)
+![img.png](docs/docker-containers.png)
 
 ### 4. Acceder a la API
 
@@ -83,3 +83,25 @@ Abre tu navegador web y navega a http://localhost:5050/healthchecks-ui
 
 
 <img width="90%" src="docs/healthchecks.png">
+
+
+#### Seq. Monitoreo | Registro de Eventos
+
+Abre tu navegador web y navega a http://localhost:5341/
+
+
+<img width="90%" src="docs/seq.png">
+
+
+#### Ejecutar proyecto local
+
+Crea los siguientes contendores de docker
+
+```bash
+docker run --name  local-mysql -e MYSQL_ROOT_PASSWORD=P@ssword! -d -p 3306:3306 mysql:8.0
+```
+
+```bash
+docker run --name local-seq -e ACCEPT_EULA=Y -p 5341:80 datalust/seq
+```
+Ejcuta el proyecto por la URL https://localhost:7298

@@ -12,6 +12,7 @@
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       - db
+      - seq
     networks:
       - app-network
 
@@ -25,7 +26,27 @@
       - "3306:3306"
     networks:
       - app-network
+  
+  # The Seq service
+  seq:
+    image: datalust/seq
+    container_name: people-seq
+    restart: unless-stopped
+    mem_limit: 5g
+    memswap_limit: 5g
+    volumes:
+      - seqdata:/data
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:80
+    networks:
+      - app-network
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  seqdata:
+    driver: local

@@ -6,11 +6,14 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
 using People.Api.Healths;
 using People.Application;
 using People.Application.Exceptions;
 using People.Application.Models;
 using People.Infrastructure.Persistence;
+using People.Infrastructure.Persistence.Context;
 using People.Infrastructure.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,21 +67,46 @@ builder.Services.AddHealthChecks()
     .AddMySql(builder.Configuration.GetConnectionString("People")!, tags: new[] { "database" })
     .AddCheck<WebHealthCheck>("web_server_check", tags: new[] { "web_server" });
 
-builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+builder.Services.AddHealthChecksUI()
+    .AddInMemoryStorage();
+
+// Setup NLog
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+
+if (builder.Environment.IsProduction())
+{
+    var log = LogManager.Setup()
+        .LoadConfigurationFromAppSettings(nlogConfigSection: "nlog.prod.config")
+        .GetCurrentClassLogger();
+    
+    log.Info("Loading configuration: Production");
+    Console.WriteLine("Loading configuration: Production");
+}
+else
+{
+    var log = LogManager.Setup()
+        .LoadConfigurationFromAppSettings(nlogConfigSection: "nlog.config")
+        .GetCurrentClassLogger();
+    
+    log.Info("Loading configuration: Not Production");
+    Console.WriteLine("Loading configuration: Not Production");
+}
+
+builder.WebHost.UseNLog();
 
 var app = builder.Build();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
+    Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapHealthChecksUI();
-
-app.MapHealthChecks("/health/secure", new HealthCheckOptions
+app.MapHealthChecksUI(config =>
 {
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-}).RequireAuthorization();
+    config.UIPath = "/healthchecks-ui";            
+});
 
 app.UseCors();
 
@@ -101,6 +129,8 @@ public static class Extensions
 {
     public static void UseGlobalException(this WebApplication app)
     {
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        
         _ = app.UseExceptionHandler(exceptionHandlerApp =>
         {
             exceptionHandlerApp.Run(async context =>
@@ -127,7 +157,6 @@ public static class Extensions
                     }
                     else
                     {
-                        // TODO log
                         responseModel = ApiResponse.Error("Please, contact the support service.");
                     }
                 
@@ -150,6 +179,8 @@ public static class Extensions
                     DictionaryKeyPolicy = null,
                     PropertyNamingPolicy = null
                 };
+                
+                logger.LogError("{Code} | {Error}", responseModel.Code, error?.Message);
 
                 await context.Response.WriteAsJsonAsync(responseModel, jsonSerializerOptions);
             });
