@@ -77,7 +77,7 @@ dotnet test /p:CollectCoverage=true
 
 <img width="90%" src="docs/coverage.png">
 
-#### Health Checks
+## Health Checks
 
 Abre tu navegador web y navega a http://localhost:5050/healthchecks-ui
 
@@ -85,7 +85,7 @@ Abre tu navegador web y navega a http://localhost:5050/healthchecks-ui
 <img width="90%" src="docs/healthchecks.png">
 
 
-#### Seq. Monitoreo | Registro de Eventos
+## Seq. Monitoreo | Registro de Eventos
 
 Abre tu navegador web y navega a http://localhost:5341/
 
@@ -93,7 +93,7 @@ Abre tu navegador web y navega a http://localhost:5341/
 <img width="90%" src="docs/seq.png">
 
 
-#### Ejecutar proyecto local
+## Ejecutar proyecto local
 
 Crea los siguientes contendores de docker
 
