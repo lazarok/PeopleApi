@@ -72,6 +72,10 @@ app.MapControllers();
 
 app.Run();
 
+
+// Make the implicit Program class public so test projects can access it
+public partial class Program {}
+
 public static class Extensions
 {
     public static void UseGlobalException(this WebApplication app)

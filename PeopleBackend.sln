@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.MapperTests", "tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Infrastructure.Shared", "src\People.Infrastructure.Shared\People.Infrastructure.Shared.csproj", "{8FED9E59-561E-46CD-BC89-675C554E23A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.IntegrationTests", "tests\People.IntegrationTests\People.IntegrationTests.csproj", "{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,7 @@ Global
 		{DFFF1074-F30C-4691-A4C5-237DAD1E7F81} = {A971251F-0734-4C37-B73C-55F6A86164F7}
 		{9098E78F-23EC-4843-ACF8-A78F3C868584} = {D09353EA-6223-4C88-A2F0-77C248898720}
 		{8FED9E59-561E-46CD-BC89-675C554E23A4} = {A971251F-0734-4C37-B73C-55F6A86164F7}
+		{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7} = {D09353EA-6223-4C88-A2F0-77C248898720}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B1B752A-07DB-41AC-967B-822F020BA1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -59,5 +62,9 @@ Global
 		{8FED9E59-561E-46CD-BC89-675C554E23A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FED9E59-561E-46CD-BC89-675C554E23A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FED9E59-561E-46CD-BC89-675C554E23A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4961A4-18D5-4F8B-B43B-EE45F15FFCF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

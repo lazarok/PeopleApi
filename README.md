@@ -54,3 +54,29 @@ Además, el sistema define una abstracción a través de la interfaz `IStorageSe
 - **S3StorageService (NO PROBADO)**: Gestión de archivos utilizando almacenamiento en Amazon S3.
 
 Ambas implementaciones permiten intercambiar la estrategia de almacenamiento sin modificar la lógica de negocio, facilitando la configuración y escalabilidad del sistema.
+
+
+#
+## Ejecutar Pruebas Unitarias
+
+Ir al directorio
+```bash
+$ ls
+```
+
+```
+PeopleBackend.sln                       README.md                               docs                                    tests
+docker-compose.yml                      src
+```
+
+#### Ejecutar pruebas con covertura de código
+
+```bash
+dotnet test /p:CollectCoverage=true
+```
+
+<img width="95%" src="docs/coverage.png">
+
+#
+#
+

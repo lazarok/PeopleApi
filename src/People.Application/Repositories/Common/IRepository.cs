@@ -1,9 +1,11 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace People.Application.Repositories.Common;
 
 public interface IRepository<TEntity> where TEntity : class
 {
+    public DbContext Context { get; }
     TEntity? GetById(long id);
     Task<TEntity?> GetByIdAsync(long id, string[]? eagerIncludes = null, CancellationToken cancellationToken = default);
     IQueryable<TEntity> GetAll();

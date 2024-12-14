@@ -5,11 +5,22 @@ using Person = People.Domain.Entities.Person;
 
 namespace People.Infrastructure.Persistence.Seeds;
 
-public class BuildMockPeople
+public class PeopleContextSeed(IRepository<Person> repository)
 {
-    public static void Build(IRepository<Person> repository)
+    public async Task EnsureCreatedAsync()
     {
-        if (repository.Any() == true)
+        await repository.Context.Database.EnsureCreatedAsync();
+    }
+    
+    public async Task EnsureDeletedAsync()
+    {
+        await repository.Context.Database.EnsureDeletedAsync();
+        await repository.Context.DisposeAsync();
+    }
+    
+    public async Task SeedAsync()
+    {
+        if (await repository.AnyAsync() == true)
             return;
 
         const int size = 25;
@@ -29,6 +40,6 @@ public class BuildMockPeople
         
         repository.AddRange(list);
 
-        repository.SaveChanges();
+        await repository.SaveChangesAsync();
     }
 }

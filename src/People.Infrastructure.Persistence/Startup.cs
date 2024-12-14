@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using People.Application.Repositories.Common;
-using People.Domain.Entities;
 using People.Infrastructure.Persistence.Common;
 using People.Infrastructure.Persistence.Context;
 using People.Infrastructure.Persistence.Seeds;
@@ -18,15 +17,18 @@ public static class Startup
         
         services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
         
+        services.AddScoped<PeopleContextSeed>();
+        
         var container = services.BuildServiceProvider();
+        
         
         // Run migrations
         var peopleContext = container.GetRequiredService<PeopleContext>();
         peopleContext.Database.Migrate();
         
         // Seed
-        var repository = container.GetRequiredService<IRepository<Person>>();
-        BuildMockPeople.Build(repository);
+        var seeder = container.GetRequiredService<PeopleContextSeed>();
+        seeder.SeedAsync().Wait();
         
         return services;
     }

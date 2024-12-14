@@ -14,6 +14,8 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Base
     {
         _context = context;
     }
+    
+    public DbContext Context => _context;
 
     public void Add(TEntity entity)
     {
